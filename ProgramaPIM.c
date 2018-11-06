@@ -8,7 +8,7 @@ int coletarDados(int nome, int dataNasc, int rg, int email)
 {
     int dados = 0;
     fflush(stdin); // LIMPAR BUFFER DO TECLADO
-    dados += printf("Informe o nome completo do visitante: ");
+    dados += printf("\nInforme o nome completo do visitante: ");
     dados += gets(nome);
     dados += printf("Informe a data de nascimento do visitante: ");
     dados += gets(dataNasc);
@@ -39,6 +39,8 @@ int ticket(int funcaoCodigo, int nome, int dataNasc, int rg, int email, int letr
     dados += printf("                              DATA DE NASCIMENTO: %s\n", dataNasc);
     dados += printf("                              RG: %s\n", rg);
     dados += printf("                              E-MAIL: %s\n", email);
+    dados += printf("                              DATA: 10/12/2018\n");
+    dados += printf("                              HORA: 17:00\n");
     dados += printf("                              ASSENTO: %s%d\n", letra, assento);
     dados += printf(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
     return dados;
@@ -77,6 +79,8 @@ main()
     while(tentar != 1)
     {
         system("cls");
+        printf("\n======= UNIP - PALESTRA =======\n\n");
+        printf("===============================\n\n");
         tentar = 0; // FLAG PARA CASO USUARIO OU SENHA ESTEJAM INCORRETOS
         printf("Digite seu usuario: ");
         gets(usuario);
@@ -89,6 +93,8 @@ main()
             {
                 // Apresenta o menu principal
                 system("cls");
+                printf("\n          MENU PRINCIPAL\n\n");
+                printf("================================\n\n");
                 printf("1- Gerenciar visitante\n");
                 printf("2- Realizar sorteio\n");
                 printf("3- Enviar comunicado por e-mail\n");
@@ -103,6 +109,8 @@ main()
                         {
                             system("cls");
                             // Apresenta o menu secundário da opção 1
+                            printf("\n       MENU SECUNDARIO\n\n");
+                            printf("=============================\n\n");
                             printf("1- Incluir participante\n");
                             printf("2- Excluir participante\n");
                             printf("3- Listar lugares livres\n");
@@ -139,6 +147,8 @@ main()
                                         system("cls");
                                         achou = 0; // FLAG PARA VERIFICAR SE HÁ ASSENTOS DISPONÍVEIS
                                         fflush(stdin); // LIMPA O BUFFER DO TECLADO
+                                        printf("\n                 INCLUIR PARTICIPANTE\n\n");
+                                        printf("======================================================\n\n");
                                         printf("O visitante e um convidado? (S / N): ");
                                         gets(resp1);
                                         printf("O visitante necessita de um lugar especial? (S / N): ");
@@ -176,8 +186,7 @@ main()
                                             {
                                                 if(statusReservados[i] == 0)
                                                 {
-                                                    system("cls");
-                                                    printf("Informe o numero do assento reservado: ");
+                                                    printf("\nInforme o numero do assento reservado: ");
                                                     scanf("%d", &nAssentoReservado);
                                                     if(statusReservados[nAssentoReservado - 1 ] == 0)
                                                     {
