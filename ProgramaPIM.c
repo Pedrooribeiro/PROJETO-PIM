@@ -30,15 +30,11 @@ int gerarCodigo(int cod, int i, int n1, int n2)
 }
 
 // FUNÇÃO PARA GERAR TICKET
-int ticket(int funcaoCodigo, int nome, int dataNasc, int rg, int email, int letra, int assento)
+int ticket(int codigo, int letra, int assento)
 {
     int dados = 0;
     dados += printf(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
-    dados += printf("                              CODIGO: %d\n", funcaoCodigo);
-    dados += printf("                              NOME COMPLETO: %s\n", nome);
-    dados += printf("                              DATA DE NASCIMENTO: %s\n", dataNasc);
-    dados += printf("                              RG: %s\n", rg);
-    dados += printf("                              E-MAIL: %s\n", email);
+    dados += printf("                              CODIGO: %d\n", codigo);
     dados += printf("                              DATA: 10/12/2018\n");
     dados += printf("                              HORA: 17:00\n");
     dados += printf("                              ASSENTO: %s%d\n", letra, assento);
@@ -46,15 +42,15 @@ int ticket(int funcaoCodigo, int nome, int dataNasc, int rg, int email, int letr
     return dados;
 }
 
-
 main()
 {
     char user[] = "un", password[] = "pa", usuario[20], senha[20];
-    char resp1[10], resp2[10];
     char nomeComp[50], dataNasc[11], rg[13], email[30];
+    char resp[10], resp1[10], resp2[10];
     char letraEsp[] = "E", letraRes[] = "R", letraA[] = "A", letraB[] = "B", letraC[] = "C", letraD[] = "D";
-    int i, cod, tentar, op1, op2, codigo, visitantes[53], nAssentoReservado;
-    int assentos[40], assentosReservados[10], assentosEspeciais[3], status[40], statusReservados[10], statusEspeciais[3], encontrou, achou;
+    char cadeiraOcupada[] = "[x]", cadeiraLivre[] = "[]";
+    int i, x, tentar, cod, op1, op2, codigo, codExc, visitantes[53], nAssentoReservado;
+    int assentos[40], assentosReservados[10], assentosEspeciais[3], status[40], statusReservados[10], statusEspeciais[3], encontrou, achou, respondeu;
 
     for(i = 0; i < 3; i++)
     {
@@ -93,6 +89,7 @@ main()
             {
                 // Apresenta o menu principal
                 system("cls");
+                op2 = 0;
                 printf("\n          MENU PRINCIPAL\n\n");
                 printf("================================\n\n");
                 printf("1- Gerenciar visitante\n");
@@ -146,6 +143,7 @@ main()
                                     {
                                         system("cls");
                                         achou = 0; // FLAG PARA VERIFICAR SE HÁ ASSENTOS DISPONÍVEIS
+                                        respondeu = 0; // FLAG PARA VERIFICAR SE AS PERGUNTAS FORAM RESPONDIDAS CORRETAMENTE
                                         fflush(stdin); // LIMPA O BUFFER DO TECLADO
                                         printf("\n                 INCLUIR PARTICIPANTE\n\n");
                                         printf("======================================================\n\n");
@@ -166,7 +164,7 @@ main()
                                                     coletarDados(nomeComp, dataNasc, rg, email);
                                                     system("cls");
                                                     // FUNÇÃO MOSTRAR TICKET
-                                                    ticket(codigo, nomeComp, dataNasc, rg, email, letraEsp, assentosEspeciais[i]);
+                                                    ticket(codigo, letraEsp, assentosEspeciais[i]);
                                                     getch();
                                                     achou = 1;
                                                     i = 3;
@@ -178,6 +176,7 @@ main()
                                                     printf("Infelizmente todos assentos especiais ja estao ocupados.");
                                                     getch();
                                             }
+                                            respondeu = 1;
                                         }
                                         if(strcmp(resp1, "S") == 0 && strcmp(resp2, "N") == 0)
                                         {
@@ -195,7 +194,7 @@ main()
                                                         coletarDados(nomeComp, dataNasc, rg, email);
                                                         // WHILE PARA INCREMENTAR O NÚMERO DO ASSENTO
                                                         system("cls");
-                                                        ticket(codigo, nomeComp, dataNasc, rg, email, letraRes, nAssentoReservado);
+                                                        ticket(codigo, letraRes, nAssentoReservado);
                                                         getch();
                                                         achou = 1;
                                                     }
@@ -208,6 +207,7 @@ main()
                                                 printf("Esse assento reservado ja esta ocupado.");
                                                 getch();
                                             }
+                                            respondeu = 1;
                                         }
                                         if(strcmp(resp1, "N") == 0 && strcmp(resp2, "N") == 0)
                                         {
@@ -222,19 +222,19 @@ main()
                                                     system("cls");
                                                     if(i < 10)
                                                     {
-                                                        ticket(codigo, nomeComp, dataNasc, rg, email, letraA, assentos[i]);
+                                                        ticket(codigo, letraA, assentos[i]);
                                                     }
                                                     if(i >= 10 && i < 20)
                                                     {
-                                                        ticket(codigo, nomeComp, dataNasc, rg, email, letraB, assentos[i - 10]);
+                                                        ticket(codigo, letraB, assentos[i - 10]);
                                                     }
                                                     if(i >= 20 && i < 30)
                                                     {
-                                                        ticket(codigo, nomeComp, dataNasc, rg, email, letraC, assentos[i - 20]);
+                                                        ticket(codigo, letraC, assentos[i - 20]);
                                                     }
                                                     if(i >= 30 && i < 40)
                                                     {
-                                                        ticket(codigo, nomeComp, dataNasc, rg, email, letraD, assentos[i - 30]);
+                                                        ticket(codigo, letraD, assentos[i - 30]);
                                                     }
                                                     getch();
                                                     achou = 1;
@@ -247,20 +247,274 @@ main()
                                                 printf("Infelizmente todos os assentos comuns ja estao ocupados.");
                                                 getch();
                                             }
+                                            respondeu = 1;
                                         }
                                     }
-                                }
+                                    if(respondeu == 0)
+                                    {
+                                        printf("Erro! Responda novamente as perguntas.");
+                                        getch();
+                                    }
+                                    break;
+                                case 2:
+                                    system("cls");
+                                    encontrou = 0; // FLAG PARA SABER SE FOI CONCLUÍDO A EXCLUSÃO
+                                    achou = 0; // FLAG PARA VERIFICAR SE HÁ VISITANTES A SEREM EXCLUIDOS
+                                    x = 0;
+                                    fflush(stdin); // LIMPA O BUFFER DO TECLADO
+                                    while(i < 53)
+                                    {
+                                        if(visitantes[i] != 0)
+                                        {
+                                            printf("\n                 EXCLUIR PARTICIPANTE\n\n");
+                                            printf("======================================================\n\n");
+                                            printf("O visitante a ser excluido e um convidado? (S / N): ");
+                                            gets(resp1);
+                                            printf("O visitante a ser excluido e um especial? (S / N): ");
+                                            gets(resp2);
+                                            printf("\n\nDigite o codigo do convidado: ");
+                                            scanf("%d", &codExc);
+                                            fflush(stdin); // LIMPA O BUFFER DO TECLADO
+                                            printf("Voce tem certeza que deseja excluir o visitante? (S / N): ");
+                                            gets(resp);
+                                            if(strcmp(resp, "N") == 0)
+                                            {
+                                                system("cls");
+                                                printf("Exclusao cancelada com sucesso.");
+                                                respondeu = 1;
+                                                getch();
+                                                i = 53;
+                                            }
+
+                                            if(strcmp(resp2, "S") == 0)
+                                            {
+                                                system("cls");
+                                                if(strcmp(resp, "S") == 0)
+                                                {
+                                                    while(i < 53)
+                                                    {
+                                                        if(visitantes[i] == codExc)
+                                                        {
+                                                            visitantes[i] = 0;
+                                                            while(x < 3)
+                                                            {
+                                                                if(statusEspeciais[x] != 0)
+                                                                {
+                                                                    statusEspeciais[x] = 0;
+                                                                    x = 3;
+                                                                }
+                                                                x++;
+                                                            }
+                                                            printf("Exclusao concluida com sucesso!");
+                                                            getch();
+                                                            encontrou = 1;
+                                                            i = 53;
+                                                        }
+                                                        i++;
+                                                    }
+                                                    if(encontrou == 0)
+                                                    {
+                                                        printf("Nao foi possivel encontrar o visitante, tente novamente.");
+                                                        getch();
+                                                    }
+                                                }
+                                            }
+                                            if(strcmp(resp1, "S") == 0 && strcmp(resp2, "N") == 0)
+                                            {
+                                                system("cls");
+                                                if(strcmp(resp, "S") == 0)
+                                                {
+                                                    while(i < 53)
+                                                    {
+                                                        if(visitantes[i] == codExc)
+                                                        {
+                                                            visitantes[i] = 0;
+                                                            while(x < 10)
+                                                            {
+                                                                if(statusReservados[x] != 0)
+                                                                {
+                                                                    statusReservados[x] = 0;
+                                                                    x = 3;
+                                                                }
+                                                                x++;
+                                                            }
+                                                                printf("Exclusao concluida com sucesso.");
+                                                                getch();
+                                                                encontrou = 1;
+                                                                i = 53;
+                                                        }
+                                                        i++;
+                                                    }
+                                                    if(encontrou == 0)
+                                                    {
+                                                        printf("Nao foi possivel encontrar o visitante, tente novamente.");
+                                                        getch();
+                                                    }
+                                                }
+                                            }
+                                            if(strcmp(resp1, "N") == 0 && strcmp(resp2, "N") == 0)
+                                            {
+                                                system("cls");
+                                                if(strcmp(resp, "S") == 0)
+                                                {
+                                                    while(i < 53)
+                                                    {
+                                                        if(visitantes[i] == codExc)
+                                                        {
+                                                            visitantes[i] = 0;
+                                                            while(x < 40)
+                                                            {
+                                                                if(status[x] != 0)
+                                                                {
+                                                                    status[x] = 0;
+                                                                    x = 3;
+                                                                }
+                                                                x++;
+                                                            }
+                                                            printf("Exclusao concluida com sucesso.");
+                                                            getch();
+                                                            encontrou = 1;
+                                                            i = 40;
+                                                        }
+                                                        i++;
+                                                    }
+                                                    if(encontrou == 0)
+                                                    {
+                                                        printf("Nao foi possivel encontrar o visitante, tente novamente.");
+                                                        getch();
+                                                    }
+                                                }
+                                            }
+                                            achou = 1;
+                                        }
+                                        i++;
+                                    }
+                                    if(achou == 0)
+                                    {
+                                        printf("Nao ha participantes a serem excluidos.");
+                                        getch();
+                                        i = 53;
+                                    }
+                                    break;
+                                case 3:
+                                    system("cls");
+                                    printf("\nLUGARES  LIVRES\n\n");
+                                    printf("================\n\n");
+                                    encontrou = 0;
+                                    printf("CADEIRA  STATUS\n\n");
+                                    for(i = 0; i < 3; i++)
+                                    {
+                                        if(statusEspeciais[i] == 0)
+                                        {
+                                            printf("  E%d\t LIVRE\n", assentosEspeciais[i]);
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    printf("\n\n");
+                                    for(i = 0; i < 10; i++)
+                                    {
+                                        if(statusReservados[i] == 0)
+                                        {
+                                            printf("  R%d\t LIVRE\n", assentosReservados[i]);
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    printf("\n\n");
+                                    for(i = 0; i < 40; i++)
+                                    {
+                                        if(status[i] == 0)
+                                        {
+                                            if(i < 10)
+                                            {
+                                                printf("  %s%d\t LIVRE\n", letraA, assentos[i]);
+                                            }
+                                            if(i >= 10 && i < 20)
+                                            {
+                                                printf("  %s%d    LIVRE\n", letraB, assentos[i]);
+                                            }
+                                            if(i >= 20 && i < 30)
+                                            {
+                                                printf("  %s%d    LIVRE\n", letraC, assentos[i]);
+                                            }
+                                            if(i >= 30 && i < 40)
+                                            {
+                                                printf("  %s%d    LIVRE\n", letraD, assentos[i]);
+                                            }
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    if(encontrou == 0)
+                                    {
+                                        printf("Nao ha lugares livres.\n");
+                                    }
+                                    getch();
+                                    break;
+                                case 4:
+                                    system("cls");
+                                    printf("\nLUGARES   OCUPADOS\n\n");
+                                    printf("==================\n\n");
+                                    encontrou = 0;
+                                    printf("CADEIRA   STATUS\n\n");
+                                    for(i = 0; i < 3; i++)
+                                    {
+                                        if(statusEspeciais[i] == 1)
+                                        {
+                                            printf("  E%d\t  OCUPADO\n", assentosEspeciais[i]);
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    printf("\n\n");
+                                    for(i = 0; i < 10; i++)
+                                    {
+                                        if(statusReservados[i] == 1)
+                                        {
+                                            printf("  R%d\t  OCUPADO\n", assentosReservados[i]);
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    printf("\n\n");
+                                    for(i = 0; i < 40; i++)
+                                    {
+                                        if(status[i] == 1)
+                                        {
+                                            if(i < 10)
+                                            {
+                                                printf("  %s%d\t  OCUPADO\n", letraA, assentos[i]);
+                                            }
+                                            if(i >= 10 && i < 20)
+                                            {
+                                                printf("  %s%d    OCUPADO\n", letraB, assentos[i]);
+                                            }
+                                            if(i >= 20 && i < 30)
+                                            {
+                                                printf("  %s%d    OCUPADO\n", letraC, assentos[i]);
+                                            }
+                                            if(i >= 30 && i < 40)
+                                            {
+                                                printf("  %s%d    OCUPADO\n", letraD, assentos[i]);
+                                            }
+                                            encontrou = 1;
+                                        }
+                                    }
+                                    if(encontrou == 0)
+                                    {
+                                        printf("Nao ha lugares ocupados.\n");
+                                    }
+                                    getch();
+                                    break;
+
                             }
                         }
                     }
-                tentar = 1;
-            }
-            else
-            {
-                printf("Usuario ou senha incorreta, tente novamente.\n");
-                tentar = 0;
-                getch();
-            }
+                }
+            tentar = 1;
+        }
+        else
+        {
+            printf("Usuario ou senha incorreta, tente novamente.\n");
+            tentar = 0;
+            getch();
+        }
     } // WHILE
 } // MAIN
 
