@@ -3,7 +3,7 @@
 #include "stdlib.h"
 #include "string.h"
 
-    // FUNCÃO PARA COLETAR DADOS
+// FUNCÃO PARA COLETAR DADOS
 int coletarDados(int nome, int dataNasc, int rg, int email)
 {
     int dados = 0;
@@ -102,8 +102,6 @@ main()
                 switch(op1)
                 {
                     case 1:
-                        while(op2 != 6)
-                        {
                             system("cls");
                             // Apresenta o menu secundário da opção 1
                             printf("\n       MENU SECUNDARIO\n\n");
@@ -260,6 +258,7 @@ main()
                                     system("cls");
                                     encontrou = 0; // FLAG PARA SABER SE FOI CONCLUÍDO A EXCLUSÃO
                                     achou = 0; // FLAG PARA VERIFICAR SE HÁ VISITANTES A SEREM EXCLUIDOS
+                                    i = 0;
                                     x = 0;
                                     fflush(stdin); // LIMPA O BUFFER DO TECLADO
                                     while(i < 53)
@@ -502,9 +501,112 @@ main()
                                     }
                                     getch();
                                     break;
-
-                            }
-                        }
+                                case 5:
+                                    system("cls");
+                                    x = 0; // CONTADOR PARA CONTROLE INTERNO
+                                    printf("\nTODOS OS LUGARES\n\n");
+                                    printf("==================\n\n");
+                                    printf("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n");
+                                    printf("|||||||||||||||||||||||||||||||||||| PALCO |||||||||||||||||||||||||||||||||||||||||\n");
+                                    printf("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n\n");
+                                    printf("  \t 1\t 2\t 3\t 4\t 5\t 6\t 7\t 8\t 9\t 10\t\n\n");
+                                    printf("  E\t");
+                                    for(i = 0; i < 3; i++)
+                                    {
+                                        if(statusEspeciais[i] == 0)
+                                        {
+                                            printf("[ ]\t");
+                                        }
+                                        if(statusEspeciais[i] == 1)
+                                        {
+                                            printf("[X]\t");
+                                        }
+                                    }
+                                    printf("\n\n  R\t");
+                                    for(i = 0; i < 10; i++)
+                                    {
+                                        if(statusReservados[i] == 0)
+                                        {
+                                            printf("[ ]\t");
+                                        }
+                                        if(statusReservados[i] == 1)
+                                        {
+                                            printf("[X]\t");
+                                        }
+                                    }
+                                    for(i = 0; i < 40; i++)
+                                    {
+                                        if(i < 10)
+                                        {
+                                            if(i < 1)
+                                            {
+                                                printf("\n\n  A\t");
+                                            }
+                                            if(status[i] == 0)
+                                            {
+                                                printf("[ ]\t");
+                                            }
+                                            if(status[i] == 1)
+                                            {
+                                                printf("[X]\t");
+                                            }
+                                        }
+                                        if(i >= 10 && i < 20)
+                                        {
+                                            if(i < 11)
+                                            {
+                                                printf("\n\n  B\t");
+                                            }
+                                            if(status[i] == 0)
+                                            {
+                                                printf("[ ]\t");
+                                            }
+                                            if(status[i] == 1)
+                                            {
+                                                printf("[X]\t");
+                                            }
+                                        }
+                                        if(i >= 20 && i < 30)
+                                        {
+                                            if(i < 21)
+                                            {
+                                                printf("\n\n  C\t");
+                                            };
+                                            if(status[i] == 0)
+                                            {
+                                                printf("[ ]\t");
+                                            }
+                                            if(status[i] == 1)
+                                            {
+                                                printf("[X]\t");
+                                            }
+                                        }
+                                        if(i >= 30 && i < 40)
+                                        {
+                                            if(i < 31)
+                                            {
+                                                printf("\n\n  D\t");
+                                            };
+                                            if(status[i] == 0)
+                                            {
+                                                printf("[ ]\t");
+                                            }
+                                            if(status[i] == 1)
+                                            {
+                                                printf("[X]\t");
+                                            }
+                                        }
+                                    }
+                                    printf("\n\n");
+                                    getch();
+                                    break;
+                                case 6:
+                                    break;
+                                default:
+                                    printf("Opcao invalida!");
+                                    getch();
+                                    break;
+                            } // SWITCH(OP2)
                     }
                 }
             tentar = 1;
